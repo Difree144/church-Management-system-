@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Church of God — Nambale, Busia County</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0d2648;
+      --blue:    #1a56a8;
+      --blue2:   #2369c4;
+      --sky:     #e8f2ff;
+      --gold:    #c9a84c;
+      --gold2:   #e2c06a;
+      --white:   #ffffff;
+      --off:     #f4f8ff;
+      --text:    #111827;
+      --muted:   #6b7280;
+      --border:  rgba(26,86,168,0.15);
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--sky); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 1.4rem 3rem;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+    nav.scrolled {
+      background: var(--white);
+      padding: 1rem 3rem;
+      box-shadow: 0 2px 24px rgba(13,38,72,0.1);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.75rem; text-decoration: none;
+    }
+    .nav-cross {
+      width: 36px; height: 36px; position: relative; flex-shrink: 0;
+    }
+    .nav-cross::before, .nav-cross::after {
+      content: ''; position: absolute; background: var(--gold); border-radius: 2px;
+    }
+    .nav-cross::before { width: 6px; height: 36px; left: 50%; transform: translateX(-50%); }
+    .nav-cross::after  { width: 26px; height: 6px; top: 30%; left: 50%; transform: translateX(-50%); }
+    .nav-name {
+      font-family: var(--serif); font-size: 1.2rem; font-weight: 700;
+      color: var(--white); transition: color 0.4s; line-height: 1.1;
+    }
+    .nav-name span { display: block; font-family: var(--sans); font-size: 0.58rem; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-top: 1px; }
+    nav.scrolled .nav-name { color: var(--navy); }
+    nav ul { list-style: none; display: flex; gap: 2.2rem; align-items: center; }
+    nav a.nav-link {
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; text-decoration: none;
+      color: rgba(255,255,255,0.85); transition: color 0.25s;
+    }
+    nav.scrolled a.nav-link { color: var(--navy); }
+    nav a.nav-link:hover { color: var(--gold); }
+    .nav-btn {
+      padding: 0.6rem 1.4rem; background: var(--gold);
+      color: var(--navy) !important; font-weight: 600 !important;
+      border-radius: 2px; transition: background 0.25s, transform 0.2s !important;
+    }
+    .nav-btn:hover { background: var(--gold2) !important; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh; position: relative; display: flex;
+      flex-direction: column; justify-content: center; align-items: flex-start;
+      padding: 7rem 3rem 4rem; overflow: hidden;
+      background: var(--navy);
+    }
+    /* Light rays — signature element */
+    .rays {
+      position: absolute; inset: 0; overflow: hidden; z-index: 0;
+    }
+    .ray {
+      position: absolute; top: -10%;
+      width: 2px; height: 140%; opacity: 0;
+      transform-origin: top center;
+      animation: rayFade 8s ease-in-out infinite;
+    }
+    .ray:nth-child(1)  { left: 20%; background: linear-gradient(to bottom, rgba(201,168,76,0.35), transparent); transform: rotate(-8deg);  animation-delay: 0s; }
+    .ray:nth-child(2)  { left: 30%; background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent); transform: rotate(-3deg);  animation-delay: 1s; }
+    .ray:nth-child(3)  { left: 42%; background: linear-gradient(to bottom, rgba(201,168,76,0.2), transparent);  transform: rotate(2deg);   animation-delay: 2s; width: 4px; }
+    .ray:nth-child(4)  { left: 55%; background: linear-gradient(to bottom, rgba(255,255,255,0.06), transparent); transform: rotate(6deg);   animation-delay: 0.5s; }
+    .ray:nth-child(5)  { left: 68%; background: linear-gradient(to bottom, rgba(201,168,76,0.25), transparent); transform: rotate(11deg);  animation-delay: 3s; }
+    .ray:nth-child(6)  { left: 80%; background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent); transform: rotate(15deg); animation-delay: 1.5s; }
+    @keyframes rayFade {
+      0%, 100% { opacity: 0; } 30%, 70% { opacity: 1; }
+    }
+    /* Large background cross */
+    .hero-cross-bg {
+      position: absolute; right: 4%; top: 50%; transform: translateY(-50%);
+      width: 420px; height: 420px; opacity: 0.04; z-index: 0;
+    }
+    .hero-cross-bg::before, .hero-cross-bg::after {
+      content: ''; position: absolute; background: var(--white); border-radius: 8px;
+    }
+    .hero-cross-bg::before { width: 60px; height: 100%; left: 50%; transform: translateX(-50%); }
+    .hero-cross-bg::after  { width: 100%; height: 60px; top: 28%; left: 0; }
+
+    .hero-inner { position: relative; z-index: 2; max-width: 680px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.9s 0.3s forwards;
+    }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 2px; background: var(--gold); }
+    h1 {
+      font-family: var(--serif); font-size: clamp(3.2rem, 7vw, 6rem);
+      font-weight: 900; line-height: 1.0; color: var(--white);
+      margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp 0.9s 0.55s forwards;
+    }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-size: 1rem; color: rgba(255,255,255,0.65); max-width: 460px;
+      line-height: 1.8; margin-bottom: 2.5rem;
+      opacity: 0; animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.9s 1s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem; font-family: var(--sans);
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; text-decoration: none;
+      transition: all 0.3s; border-radius: 2px; cursor: pointer; border: none;
+    }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.4); }
+    .btn-outline { border: 1.5px solid rgba(255,255,255,0.4); color: var(--white); background: transparent; }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-blue { background: var(--blue); color: var(--white); }
+    .btn-blue:hover { background: var(--blue2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,86,168,0.35); }
+
+    /* Hero service times ticker */
+    .hero-services {
+      position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+      background: rgba(201,168,76,0.95); backdrop-filter: blur(8px);
+      padding: 1.1rem 3rem;
+      display: flex; gap: 3rem; align-items: center; flex-wrap: wrap;
+    }
+    .service-badge {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .service-icon { font-size: 1.2rem; }
+    .service-label {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--navy); opacity: 0.7;
+    }
+    .service-time {
+      font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--navy);
+    }
+    .service-divider { width: 1px; height: 36px; background: rgba(13,38,72,0.2); }
+    .hero-services .join-cta {
+      margin-left: auto; font-size: 0.72rem; font-weight: 700;
+      color: var(--navy); text-decoration: none; letter-spacing: 0.1em;
+      text-transform: uppercase; border-bottom: 2px solid var(--navy);
+      padding-bottom: 1px; transition: opacity 0.2s;
+    }
+    .hero-services .join-cta:hover { opacity: 0.65; }
+
+    /* ── SECTION DEFAULTS ── */
+    .section { padding: 6rem 3rem; }
+    .section-alt { background: var(--off); }
+    .section-navy { background: var(--navy); }
+    .section-sky  { background: var(--sky); }
+
+    .eyebrow {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); }
+    .eyebrow.light { color: var(--gold); }
+    .eyebrow.light::before { background: var(--gold); }
+    h2 {
+      font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.15; margin-bottom: 1rem;
+    }
+    h2 em { font-style: italic; color: var(--gold); }
+    h2.light { color: var(--white); }
+    .lead {
+      font-size: 0.95rem; color: var(--muted); max-width: 560px;
+      line-height: 1.9; margin-bottom: 3rem;
+    }
+    .lead.center { text-align: center; margin: 0 auto 3rem; }
+
+    /* ── WELCOME ── */
+    #welcome .inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .welcome-visual {
+      position: relative;
+    }
+    .welcome-img-wrap {
+      width: 100%; aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+      position: relative; overflow: hidden;
+    }
+    .welcome-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .welcome-img-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1rem;
+      color: rgba(255,255,255,0.3); font-size: 0.8rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .cross-sm {
+      width: 60px; height: 60px; position: relative; opacity: 0.4;
+    }
+    .cross-sm::before, .cross-sm::after {
+      content: ''; position: absolute; background: var(--gold); border-radius: 2px;
+    }
+    .cross-sm::before { width: 10px; height: 60px; left: 50%; transform: translateX(-50%); }
+    .cross-sm::after  { width: 44px; height: 10px; top: 28%; left: 50%; transform: translateX(-50%); }
+    .welcome-badge {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--gold); padding: 1.5rem 2rem; text-align: center;
+      box-shadow: 0 8px 32px rgba(201,168,76,0.4);
+    }
+    .badge-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 900; color: var(--navy); line-height: 1; }
+    .badge-label { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); opacity: 0.7; margin-top: 0.3rem; }
+    .values-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+    .values-list li {
+      display: flex; align-items: flex-start; gap: 1rem;
+      font-size: 0.88rem; color: var(--text); line-height: 1.6;
+    }
+    .values-list li::before {
+      content: '✦'; color: var(--gold); font-size: 0.7rem; margin-top: 4px; flex-shrink: 0;
+    }
+
+    /* ── SERVICES SCHEDULE ── */
+    #services .services-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+      background: var(--border); border: 1px solid var(--border); margin-top: 3rem;
+    }
+    .service-card {
+      background: var(--white); padding: 3rem 2.5rem;
+      position: relative; overflow: hidden; transition: background 0.3s;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 0; height: 3px; background: var(--gold); transition: width 0.4s;
+    }
+    .service-card:hover { background: var(--off); }
+    .service-card:hover::before { width: 100%; }
+    .card-time {
+      font-family: var(--serif); font-size: 3.5rem; font-weight: 900;
+      color: var(--blue); line-height: 1; margin-bottom: 0.3rem;
+    }
+    .card-am {
+      font-family: var(--sans); font-size: 1rem; font-weight: 400; color: var(--muted);
+    }
+    .card-title {
+      font-family: var(--serif); font-size: 1.4rem; font-weight: 700;
+      color: var(--navy); margin: 1rem 0 0.5rem;
+    }
+    .card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.8; }
+    .card-day {
+      display: inline-block; margin-top: 1.2rem; padding: 0.3rem 0.8rem;
+      background: var(--sky); font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue);
+    }
+
+    /* ── PRAYER REQUEST ── */
+    #prayer { background: var(--navy); }
+    #prayer .inner {
+      display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start;
+    }
+    #prayer h2 { color: var(--white); }
+    #prayer .lead { color: rgba(255,255,255,0.55); margin-bottom: 2rem; }
+    .prayer-promise {
+      background: rgba(255,255,255,0.05); border-left: 3px solid var(--gold);
+      padding: 1.5rem; font-family: var(--serif); font-style: italic;
+      font-size: 1.05rem; color: rgba(255,255,255,0.75); line-height: 1.7;
+      margin-top: 2rem;
+    }
+    .prayer-promise cite {
+      display: block; margin-top: 0.75rem; font-family: var(--sans);
+      font-style: normal; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold);
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-label {
+      display: block; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); margin-bottom: 0.5rem;
+    }
+    .form-control {
+      width: 100%; padding: 0.9rem 1rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white); font-family: var(--sans); font-size: 0.9rem;
+      outline: none; transition: border-color 0.3s; border-radius: 2px;
+    }
+    .form-control::placeholder { color: rgba(255,255,255,0.3); }
+    .form-control:focus { border-color: var(--gold); background: rgba(255,255,255,0.1); }
+    textarea.form-control { resize: vertical; min-height: 130px; }
+    .form-check {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-bottom: 1.5rem;
+    }
+    .form-check input[type="checkbox"] { margin-top: 3px; accent-color: var(--gold); }
+    #prayer-success {
+      display: none; padding: 1.2rem; background: rgba(201,168,76,0.15);
+      border: 1px solid var(--gold); color: var(--gold);
+      font-size: 0.85rem; text-align: center; border-radius: 2px; margin-top: 1rem;
+    }
+
+    /* ── DONATE ── */
+    #donate .inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .donate-visual {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      padding: 3.5rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .donate-cross {
+      width: 80px; height: 80px; position: relative; margin: 0 auto 1.5rem;
+    }
+    .donate-cross::before, .donate-cross::after {
+      content: ''; position: absolute; background: var(--gold); border-radius: 3px;
+    }
+    .donate-cross::before { width: 14px; height: 80px; left: 50%; transform: translateX(-50%); }
+    .donate-cross::after  { width: 60px; height: 14px; top: 28%; left: 50%; transform: translateX(-50%); }
+    .donate-visual h3 {
+      font-family: var(--serif); font-size: 1.6rem; color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .donate-visual p { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+    .donate-amounts {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; margin: 1.5rem 0;
+    }
+    .amount-btn {
+      padding: 0.75rem; background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white); font-family: var(--sans); font-size: 0.85rem;
+      font-weight: 600; cursor: pointer; transition: all 0.25s; border-radius: 2px;
+    }
+    .amount-btn:hover, .amount-btn.active {
+      background: var(--gold); border-color: var(--gold); color: var(--navy);
+    }
+    .donate-methods { margin-top: 1.5rem; }
+    .method-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.75rem;
+    }
+    .mpesa-box {
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+      padding: 1.2rem; display: flex; align-items: center; gap: 1rem; border-radius: 2px;
+    }
+    .mpesa-icon {
+      width: 40px; height: 40px; background: #00a651; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: white; font-size: 0.7rem; flex-shrink: 0;
+    }
+    .mpesa-detail { text-align: left; }
+    .mpesa-name { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.55); }
+    .mpesa-num { font-size: 1.1rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em; }
+
+    .donate-content .benefit {
+      display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem;
+    }
+    .benefit-icon {
+      width: 44px; height: 44px; background: var(--sky); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .benefit-text h4 { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.2rem; }
+    .benefit-text p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--off); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 240px 240px;
+      gap: 6px; margin-top: 3rem;
+    }
+    .gallery-cell {
+      overflow: hidden; background: var(--sky); position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .gallery-cell:first-child { grid-row: span 2; }
+    .gallery-cell img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease;
+    }
+    .gallery-cell:hover img { transform: scale(1.06); }
+    .gallery-placeholder {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.6rem; color: var(--blue); opacity: 0.4; padding: 1rem; text-align: center;
+    }
+    .gallery-placeholder span { font-size: 2rem; }
+    .gallery-placeholder p { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+    .gallery-more {
+      margin-top: 1.5rem; text-align: center;
+      font-size: 0.78rem; color: var(--muted);
+    }
+
+    /* ── LOCATION ── */
+    #location { background: var(--white); }
+    #location .inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+    }
+    .map-box {
+      width: 100%; aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--sky) 0%, #d0e8ff 100%);
+      position: relative; overflow: hidden; border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem; color: var(--blue);
+    }
+    .map-box iframe { width: 100%; height: 100%; border: none; display: block; }
+    .contact-block { margin-bottom: 2rem; }
+    .contact-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    }
+    .contact-item:last-child { border-bottom: none; }
+    .contact-icon {
+      width: 40px; height: 40px; background: var(--sky); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+    .contact-value { font-size: 0.92rem; font-weight: 500; color: var(--navy); }
+    .contact-value a { color: var(--blue); text-decoration: none; }
+    .contact-value a:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1c; padding: 4rem 3rem 1.5rem;
+      border-top: 3px solid var(--gold);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem;
+      padding-bottom: 3rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 2rem;
+    }
+    .footer-brand .f-cross { width: 32px; height: 32px; position: relative; margin-bottom: 1rem; }
+    .footer-brand .f-cross::before, .footer-brand .f-cross::after {
+      content: ''; position: absolute; background: var(--gold); border-radius: 2px;
+    }
+    .footer-brand .f-cross::before { width: 6px; height: 32px; left: 50%; transform: translateX(-50%); }
+    .footer-brand .f-cross::after  { width: 24px; height: 6px; top: 28%; left: 50%; transform: translateX(-50%); }
+    .footer-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+    .footer-tagline { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .footer-desc { font-size: 0.82rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 300px; }
+    .footer-social { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+    .social-link {
+      width: 38px; height: 38px; border: 1px solid rgba(255,255,255,0.15);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 0.78rem; color: rgba(255,255,255,0.5);
+      transition: all 0.3s; border-radius: 2px;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.08); }
+    .footer-col h4 {
+      font-size: 0.62rem; font-weight: 600; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.65rem; }
+    .footer-col a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.82rem; transition: color 0.25s; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.72rem; color: rgba(255,255,255,0.25); flex-wrap: wrap; gap: 0.5rem;
+    }
+    .footer-bottom span { color: var(--gold); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      nav.scrolled { padding: 0.8rem 1.5rem; }
+      nav ul { gap: 1.2rem; }
+      .nav-btn { display: none; }
+      .hero-services { gap: 1.5rem; padding: 1rem 1.5rem; }
+      .section { padding: 4rem 1.5rem; }
+      #welcome .inner, #donate .inner,
+      #location .inner, #prayer .inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .welcome-badge { right: 0; }
+      #services .services-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-cell:first-child { grid-row: span 1; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .donate-amounts { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav id="navbar">
+    <a class="nav-brand" href="#">
+      <div class="nav-cross"></div>
+      <div class="nav-name">
+        Church of God
+        <span>Nambale · Busia County</span>
+      </div>
+    </a>
+    <ul>
+      <li><a href="#welcome"  class="nav-link">About</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#prayer"   class="nav-link">Prayer</a></li>
+      <li><a href="#donate"   class="nav-link">Give</a></li>
+      <li><a href="#gallery"  class="nav-link">Gallery</a></li>
+      <li><a href="#location" class="nav-link">Find Us</a></li>
+      <li><a href="#prayer" class="nav-link nav-btn">🙏 Request Prayer</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="rays">
+      <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+      <div class="ray"></div><div class="ray"></div><div class="ray"></div>
+    </div>
+    <div class="hero-cross-bg"></div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Welcome to</p>
+      <h1>Church<br>of <em>God</em></h1>
+      <p class="hero-sub">
+        A community rooted in faith, love, and purpose — gathering in Nambale, Matunda, Busia County. 
+        All are welcome. Come as you are.
+      </p>
+      <div class="hero-cta">
+        <a href="#services" class="btn btn-gold">Join Us Sunday</a>
+        <a href="#prayer"   class="btn btn-outline">Submit Prayer Request</a>
+      </div>
+    </div>
+    <!-- Service times strip -->
+    <div class="hero-services">
+      <div class="service-badge">
+        <div class="service-icon">📖</div>
+        <div>
+          <div class="service-label">Sunday School</div>
+          <div class="service-time">8:00 AM</div>
+        </div>
+      </div>
+      <div class="service-divider"></div>
+      <div class="service-badge">
+        <div class="service-icon">🙌</div>
+        <div>
+          <div class="service-label">Main Service</div>
+          <div class="service-time">11:00 AM</div>
+        </div>
+      </div>
+      <div class="service-divider"></div>
+      <div class="service-badge">
+        <div class="service-icon">📍</div>
+        <div>
+          <div class="service-label">Location</div>
+          <div class="service-time">Matunda, Nambale</div>
+        </div>
+      </div>
+      <a href="#location" class="join-cta">Get Directions →</a>
+    </div>
+  </section>
+
+  <!-- ── WELCOME ── -->
+  <section id="welcome" class="section">
+    <div class="inner" style="max-width:1200px;margin:0 auto;">
+      <div class="welcome-visual reveal">
+        <div class="welcome-img-wrap">
+          <div class="welcome-img-placeholder">
+            <div class="cross-sm"></div>
+            <span>Church Photo</span>
+          </div>
+        </div>
+        <div class="welcome-badge">
+          <div class="badge-num">✦</div>
+          <div class="badge-label">Building Faith</div>
+        </div>
+      </div>
+      <div class="welcome-content">
+        <p class="eyebrow reveal">Who We Are</p>
+        <h2 class="reveal">A Place of <em>Faith,</em><br>Hope & Community</h2>
+        <p class="lead reveal">
+          Church of God in Nambale, Matunda is a vibrant, Spirit-filled community committed 
+          to worshipping God, growing in faith, and serving the people of Busia County and beyond.
+        </p>
+        <ul class="values-list reveal">
+          <li><strong>Worship</strong> — We honour God through authentic, heartfelt praise and prayer every Sunday.</li>
+          <li><strong>Word</strong> — Our teaching is grounded in Scripture, relevant, and life-transforming.</li>
+          <li><strong>Community</strong> — Every person is valued, known, and cared for in our church family.</li>
+          <li><strong>Mission</strong> — We are called to reach our community and the world with the Gospel.</li>
+        </ul>
+        <div style="margin-top:2.5rem;" class="reveal">
+          <a href="#services" class="btn btn-blue">Our Services →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section id="services" class="section section-alt">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="eyebrow reveal">Every Sunday</p>
+      <h2 class="reveal">Service <em>Times</em></h2>
+      <p class="lead reveal">Join us each Sunday at our home in Matunda, Nambale. Everyone is welcome — bring a friend, bring your family.</p>
+
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="card-time">8<span class="card-am">:00 AM</span></div>
+          <div class="card-title">Sunday School</div>
+          <p class="card-desc">
+            An hour of Bible-based teaching designed for all ages — from children to adults. 
+            Build your foundation in Scripture in a warm, welcoming environment.
+          </p>
+          <span class="card-day">Every Sunday</span>
+        </div>
+        <div class="service-card reveal reveal-d1">
+          <div class="card-time">11<span class="card-am">:00 AM</span></div>
+          <div class="card-title">Main Service</div>
+          <p class="card-desc">
+            Our main worship gathering featuring praise & worship, powerful preaching of the Word, 
+            and prayer ministry. Come experience the presence of God with us.
+          </p>
+          <span class="card-day">Every Sunday</span>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem;padding:1.5rem 2rem;background:var(--sky);border-left:3px solid var(--gold);max-width:600px;" class="reveal">
+        <p style="font-size:0.85rem;color:var(--navy);font-weight:500;">
+          📍 <strong>Location:</strong> Matunda, Nambale, Busia County, Kenya<br>
+          📞 <strong>Call us:</strong> <a href="tel:0140671182" style="color:var(--blue);">0140671182</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRAYER REQUEST ── -->
+  <section id="prayer" class="section section-navy">
+    <div class="inner" style="max-width:1100px;margin:0 auto;">
+      <div>
+        <p class="eyebrow light reveal">We're Believing With You</p>
+        <h2 class="light reveal">Submit a <em>Prayer</em> Request</h2>
+        <p class="lead reveal" style="color:rgba(255,255,255,0.55);">
+          You don't have to carry it alone. Our prayer team will stand with you in faith. 
+          Every request is treated with confidentiality and care.
+        </p>
+        <div class="prayer-promise reveal">
+          "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."
+          <cite>— Philippians 4:6</cite>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-control" placeholder="Enter your name" id="prayer-name"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone / Email (optional)</label>
+          <input type="text" class="form-control" placeholder="We'll follow up if needed"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Prayer Request</label>
+          <textarea class="form-control" placeholder="Share what's on your heart…" id="prayer-text"></textarea>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="prayer-anon"/>
+          <label for="prayer-anon">Keep my request anonymous — only share with the pastoral team</label>
+        </div>
+        <button class="btn btn-gold" onclick="submitPrayer()" style="width:100%;justify-content:center;">
+          🙏 Submit Prayer Request
+        </button>
+        <div id="prayer-success">
+          ✦ Your prayer request has been received. Our team will be praying for you. God bless you.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DONATE ── -->
+  <section id="donate" class="section">
+    <div class="inner" style="max-width:1100px;margin:0 auto;">
+      <div class="donate-content">
+        <p class="eyebrow reveal">Support the Ministry</p>
+        <h2 class="reveal">Give & <em>Partner</em><br>With Us</h2>
+        <p class="lead reveal" style="max-width:420px;">
+          Your giving supports the Gospel work in Nambale and beyond — from local outreach 
+          to church growth and community impact.
+        </p>
+
+        <div class="benefit reveal">
+          <div class="benefit-icon">🏫</div>
+          <div class="benefit-text">
+            <h4>Community Programs</h4>
+            <p>Supporting families, youth, and outreach in Busia County.</p>
+          </div>
+        </div>
+        <div class="benefit reveal reveal-d1">
+          <div class="benefit-icon">📖</div>
+          <div class="benefit-text">
+            <h4>Bible Teaching & Discipleship</h4>
+            <p>Equipping believers with the Word of God through every season.</p>
+          </div>
+        </div>
+        <div class="benefit reveal reveal-d2">
+          <div class="benefit-icon">🌍</div>
+          <div class="benefit-text">
+            <h4>Missions & Evangelism</h4>
+            <p>Spreading the Gospel across our county and beyond Kenya's borders.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="donate-visual">
+          <div class="donate-cross"></div>
+          <h3>Give With M-Pesa</h3>
+          <p>Quick, safe, and easy giving</p>
+          <div class="donate-amounts">
+            <button class="amount-btn active" onclick="selectAmount(this)">KSh 500</button>
+            <button class="amount-btn" onclick="selectAmount(this)">KSh 1,000</button>
+            <button class="amount-btn" onclick="selectAmount(this)">KSh 2,000</button>
+            <button class="amount-btn" onclick="selectAmount(this)">KSh 5,000</button>
+            <button class="amount-btn" onclick="selectAmount(this)">KSh 10,000</button>
+            <button class="amount-btn" onclick="selectAmount(this)">Custom</button>
+          </div>
+          <div class="donate-methods">
+            <div class="method-label">Send via M-Pesa</div>
+            <div class="mpesa-box">
+              <div class="mpesa-icon">M</div>
+              <div class="mpesa-detail">
+                <div class="mpesa-name">Paybill / Till Number</div>
+                <div class="mpesa-num">0140671182</div>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:0.72rem;color:rgba(255,255,255,0.4);margin-top:1rem;">
+            Account Name: Church of God Nambale
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GALLERY ── -->
+  <section id="gallery" class="section section-alt">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="eyebrow reveal">Our Community</p>
+      <h2 class="reveal">Life at <em>Church of God</em></h2>
+      <p class="lead reveal">Moments of worship, fellowship, and faith captured from our community in Nambale.</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-cell reveal">
+          <div class="gallery-placeholder">
+            <span>🏛️</span><p>Church Building</p>
+          </div>
+        </div>
+        <div class="gallery-cell reveal reveal-d1">
+          <div class="gallery-placeholder">
+            <span>🙏</span><p>Worship</p>
+          </div>
+        </div>
+        <div class="gallery-cell reveal reveal-d2">
+          <div class="gallery-placeholder">
+            <span>👨‍👩‍👧‍👦</span><p>Community</p>
+          </div>
+        </div>
+        <div class="gallery-cell reveal reveal-d1">
+          <div class="gallery-placeholder">
+            <span>📖</span><p>Bible Study</p>
+          </div>
+        </div>
+        <div class="gallery-cell reveal reveal-d2">
+          <div class="gallery-placeholder">
+            <span>🎶</span><p>Praise & Worship</p>
+          </div>
+        </div>
+      </div>
+      <p class="gallery-more reveal">📸 Photos coming soon — drop your images and we'll update the gallery.</p>
+    </div>
+  </section>
+
+  <!-- ── LOCATION ── -->
+  <section id="location" class="section">
+    <div class="inner" style="max-width:1100px;margin:0 auto;">
+      <div class="reveal">
+        <p class="eyebrow">Find Us</p>
+        <h2>We're in <em>Nambale,</em><br>Busia County</h2>
+        <p class="lead" style="margin-bottom:2rem;">
+          We'd love to see you in person. Come as you are — there's a seat saved for you.
+        </p>
+        <div class="contact-block">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Address</div>
+              <div class="contact-value">Matunda, Nambale<br>Busia County, Kenya</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-value"><a href="tel:0140671182">0140671182</a></div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕐</div>
+            <div>
+              <div class="contact-label">Service Times</div>
+              <div class="contact-value">Sunday School: 8:00 AM<br>Main Service: 11:00 AM</div>
+            </div>
+          </div>
+        </div>
+        <a href="https://maps.google.com/?q=Nambale+Busia+County+Kenya" target="_blank" class="btn btn-blue">
+          Open in Google Maps →
+        </a>
+      </div>
+      <div class="map-box reveal">
+        <iframe
+          src="https://maps.google.com/maps?q=Nambale,+Busia+County,+Kenya&output=embed"
+          allowfullscreen loading="lazy">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-top" style="max-width:1200px;margin:0 auto;">
+      <div class="footer-brand">
+        <div class="f-cross"></div>
+        <div class="footer-name">Church of God</div>
+        <div class="footer-tagline">Building Faith · Nambale, Busia County</div>
+        <p class="footer-desc">
+          A Spirit-filled community gathering every Sunday at Matunda, Nambale. 
+          All are welcome — come experience faith, hope, and love.
+        </p>
+        <div class="footer-social">
+          <a href="https://x.com/Fredrine126465" target="_blank" class="social-link" title="Twitter / X">𝕏</a>
+          <a href="https://www.tiktok.com/@difree_de_guy" target="_blank" class="social-link" title="TikTok">♪</a>
+        </div>
+        <p style="font-size:0.65rem;color:rgba(255,255,255,0.2);margin-top:0.75rem;">
+          ⚠ Replace social links with the church's official accounts.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#welcome">About Us</a></li>
+          <li><a href="#services">Service Times</a></li>
+          <li><a href="#prayer">Prayer Request</a></li>
+          <li><a href="#donate">Give / Donate</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#location">Find Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:0140671182">📞 0140671182</a></li>
+          <li><a href="#">📍 Matunda, Nambale</a></li>
+          <li><a href="#">Busia County, Kenya</a></li>
+          <li style="margin-top:1rem;"><a href="#services">Sunday School — 8:00 AM</a></li>
+          <li><a href="#services">Main Service — 11:00 AM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom" style="max-width:1200px;margin:0 auto;">
+      <span>© 2026 Church of God, Nambale. All rights reserved.</span>
+      <span>"Building Faith" — <span style="color:rgba(255,255,255,0.25);">Busia County, Kenya</span></span>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+
+    // Donate amount selection
+    function selectAmount(btn) {
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    // Prayer request submit
+    function submitPrayer() {
+      const name = document.getElementById('prayer-name').value.trim();
+      const text = document.getElementById('prayer-text').value.trim();
+      if (!name || !text) {
+        alert('Please enter your name and prayer request.');
+        return;
+      }
+      document.getElementById('prayer-success').style.display = 'block';
+      document.getElementById('prayer-name').value = '';
+      document.getElementById('prayer-text').value = '';
+    }
+  </script>
+</body>
+</html>
